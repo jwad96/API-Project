@@ -1,8 +1,12 @@
 const router = require('express').Router();
 const { restoreUser } = require('../../utils/auth.js');
+const sessionRouter = require('./session');
+const usersRouter = require('./users');
 const { User } = require('../../db/models');
 
 router.use(restoreUser);
+router.use('/session', sessionRouter);
+router.use('/users', usersRouter);
 
 // router.get('/require-auth', requireAuth, (req, res) => {
 //   res.json(req.user);
@@ -23,8 +27,8 @@ router.use(restoreUser);
 //   res.json(req.user);
 // });
 
-// router.post('/test', (req, res, next) => {
-//   res.json({ requestBody: req.body });
-// });
+router.post('/test', (req, res, next) => {
+  res.json({ requestBody: req.body });
+});
 
 module.exports = router;

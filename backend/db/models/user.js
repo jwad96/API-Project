@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       return await User.scope('currentUser').findByPk(id);
     }
 
-    static async login(credential, password) {
+    static async login({ credential, password }) {
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         allowNull: false,
         validate: {
-          length: [4, 30],
+          len: [4, 30],
           isNotEmail(value) {
             if (Validator.isEmail) {
               throw new Error("Username shouldn't be email");
@@ -66,14 +66,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
-        validate: { length: [4, 30] },
+        validate: { len: [4, 30] },
       },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
         unique: true,
         validate: {
-          length: [60, 60],
+          len: [60, 60],
         },
       },
     },
