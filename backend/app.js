@@ -1,3 +1,5 @@
+const { User } = require('./db/models');
+
 const express = require('express');
 require('express-async-errors');
 const morgan = require('morgan');
@@ -37,6 +39,10 @@ app.use(
 );
 
 app.use(routes);
+
+app.get('/test', async (req, res, next) => {
+  res.json(await User.scope('loginUser').findAll());
+});
 
 app.use((_req, _res, next) => {
   const err = new Error("The requested resourece couldn't be found.");
