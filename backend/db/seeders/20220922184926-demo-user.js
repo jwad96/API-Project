@@ -24,7 +24,7 @@ module.exports = {
       'Users',
       {
         username: {
-          [Op.eq]: 'test-username',
+          [Op.eq]: 'Demo-lition',
         },
       },
       {}
