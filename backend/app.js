@@ -32,11 +32,11 @@ app.get('/', async (req, res, next) => {
   } = require('./db/models');
 
   responseObj.users = await User.findAll();
-  responseObj.bookings = await Booking.findAll();
-  responseObj.spots = await Spot.findAll();
-  responseObj.spotImages = await SpotImage.findAll();
-  responseObj.reviews = await Review.findAll();
-  responseObj.revImages = await ReviewImage.findAll();
+  // responseObj.bookings = await Booking.findAll();
+  // responseObj.spots = await Spot.findAll();
+  // responseObj.spotImages = await SpotImage.findAll();
+  // responseObj.reviews = await Review.findAll();
+  // responseObj.revImages = await ReviewImage.findAll();
 
   res.json(responseObj);
 });
