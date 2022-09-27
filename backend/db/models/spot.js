@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Booking,
         foreignKey: 'spotId',
       });
+
+      Spot.belongsToMany(models.User, {
+        through: models.Review,
+        foreignKey: 'spotId',
+      });
     }
   }
   Spot.init(
