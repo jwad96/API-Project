@@ -18,13 +18,15 @@ router.get('/', async (req, res, next) => {
       'price',
       'createdAt',
       'updatedAt',
-      //   [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+      [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
     ],
 
     include: {
       model: Review,
       attributes: [],
     },
+
+    group: ['Spot.id'],
   });
 
   spots.forEach((spot) => {
