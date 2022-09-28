@@ -51,6 +51,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ownerId',
       });
 
+      User.hasMany(models.Review, {
+        foreignKey: 'userId',
+      });
+
       User.belongsToMany(models.Spot, {
         through: models.Booking,
         foreignKey: 'userId',
@@ -60,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Spot, {
         through: models.Review,
         foreignKey: 'userId',
+        as: 'reviewer',
       });
     }
   }
