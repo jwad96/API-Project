@@ -19,7 +19,28 @@ app.use(express.json());
 if (!isProduction) {
   app.use(cors());
 }
+// DELETE THIS SHIT
+app.get('/', async (req, res, next) => {
+  const responseObj = {};
+  const {
+    User,
+    Booking,
+    Spot,
+    SpotImage,
+    Review,
+    ReviewImage,
+  } = require('./db/models');
 
+  responseObj.users = await User.findAll({});
+  responseObj.bookings = await Booking.findAll();
+  responseObj.spots = await Spot.findAll();
+  responseObj.spotImages = await SpotImage.findAll();
+  responseObj.reviews = await Review.findAll();
+  responseObj.revImages = await ReviewImage.findAll();
+
+  res.json(responseObj);
+});
+// DELETE THIS SHIT
 app.use(
   helmet.crossOriginResourcePolicy({
     policy: 'cross-origin',
