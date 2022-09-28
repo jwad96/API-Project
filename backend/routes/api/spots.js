@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
       'price',
       'createdAt',
       'updatedAt',
-      [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating'],
+      [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
     ],
 
     include: {
