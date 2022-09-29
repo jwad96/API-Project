@@ -57,12 +57,17 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
-  res.json({
+  const errDetails = {
     message: err.message,
     statusCode: err.status,
     errors: err.errors,
-    stack: isProduction ? null : err.stack,
-  });
+  };
+
+  if (!isProduction) {
+    errDetails.stack = err.stack;
+  }
+
+  res.json(errDetails);
 });
 
 module.exports = app;
