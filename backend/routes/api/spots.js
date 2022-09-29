@@ -1,6 +1,12 @@
 const router = require('express').Router();
 const Sequelize = require('sequelize');
-const { Spot, Review, User, SpotImage } = require('../../db/models');
+const {
+  Spot,
+  Review,
+  User,
+  SpotImage,
+  ReviewImage,
+} = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
   const spots = await Spot.findAll({
@@ -113,6 +119,38 @@ router.get('/:spotId', async (req, res, next) => {
   spot.setDataValue('Owner', spotImagesOwner.Owner);
 
   res.json(spot);
+});
+
+router.get('/:spotId/reviews', async (req, res, next) => {
+  const reviews = await Review.findAll({
+    attributes: [
+      'id',
+      'spotId',
+      'userId',
+      'review',
+      'stars',
+      'createdAt',
+      'updatedAt',
+    ],
+    where: {
+      spotId: parseInt(req.params.spotId),
+    },
+    include: [
+      //   {
+      //     model: User,
+      //     attributes: ['id', 'firstName', 'lastName'],
+      //   },
+      {
+        model: ReviewImage,
+        as: 'ReviewImages',
+        // attributes: ['id', 'url'],
+      },
+    ],
+  });
+
+  //   const reviews = await ReviewImage.findAll();
+
+  res.json(reviews);
 });
 
 module.exports = router;

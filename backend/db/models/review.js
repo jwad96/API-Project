@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Review.hasMany(models.ReviewImage, {
         foreignKey: 'reviewId',
+        as: 'ReviewImages',
       });
 
       Review.belongsTo(models.Spot),
