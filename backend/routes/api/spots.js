@@ -109,8 +109,8 @@ router.get('/:spotId', async (req, res, next) => {
     ],
   });
 
-  //   spot.setDataValue('SpotImages', spotImagesOwner.SpotImages);
-  //   spot.setDataValue('Owner', spotImagesOwner.Owner);
+  spot.setDataValue('SpotImages', spotImagesOwner.SpotImages);
+  spot.setDataValue('Owner', spotImagesOwner.Owner);
 
   res.json(spot);
 });
