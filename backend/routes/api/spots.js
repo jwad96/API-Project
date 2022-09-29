@@ -86,6 +86,14 @@ router.get('/:spotId', async (req, res, next) => {
     group: ['Spot.id'],
   });
 
+  // Error handling
+  if (!spot) {
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+  // Error handling end
+
   const spotImagesOwner = await Spot.findByPk(parseInt(req.params.spotId), {
     attributes: [],
     include: [
@@ -101,8 +109,8 @@ router.get('/:spotId', async (req, res, next) => {
     ],
   });
 
-  spot.setDataValue('SpotImages', spotImagesOwner.SpotImages);
-  spot.setDataValue('Owner', spotImagesOwner.Owner);
+  //   spot.setDataValue('SpotImages', spotImagesOwner.SpotImages);
+  //   spot.setDataValue('Owner', spotImagesOwner.Owner);
 
   res.json(spot);
 });
