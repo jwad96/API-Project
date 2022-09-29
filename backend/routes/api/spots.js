@@ -4,6 +4,9 @@ const { Spot, Review, User, SpotImage } = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
   const spots = await Spot.findAll({
+    where: {
+      id: 1,
+    },
     attributes: [
       'id',
       'ownerId',
@@ -52,6 +55,56 @@ router.get('/', async (req, res, next) => {
   });
 
   res.json(spots);
+});
+
+router.get('/:spotId', async (req, res, next) => {
+  const spot = await Spot.findByPk(parseInt(req.params.spotId), {
+    attributes: [
+      'id',
+      'ownerId',
+      'address',
+      'city',
+      'state',
+      'country',
+      'lat',
+      'lng',
+      'name',
+      'description',
+      'price',
+      'createdAt',
+      'updatedAt',
+      [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+      [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating'],
+    ],
+
+    include: [
+      {
+        model: Review,
+        attributes: [],
+      },
+    ],
+    group: ['Spot.id'],
+  });
+
+  const spotImagesOwner = await Spot.findByPk(parseInt(req.params.spotId), {
+    attributes: [],
+    include: [
+      {
+        model: SpotImage,
+        attributes: ['id', 'url', 'preview'],
+      },
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName'],
+        as: 'Owner',
+      },
+    ],
+  });
+
+  spot.setDataValue('SpotImages', spotImagesOwner.SpotImages);
+  spot.setDataValue('Owner', spotImagesOwner.Owner);
+
+  res.json(spot);
 });
 
 module.exports = router;
