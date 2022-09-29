@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Sequelize = require('sequelize');
-const { Spot, Review, User } = require('../../db/models');
+const { Spot, Review, User, SpotImage } = require('../../db/models');
 
 router.get('/', async (req, res, next) => {
   const spots = await Spot.findAll({
@@ -36,9 +36,19 @@ router.get('/', async (req, res, next) => {
     group: ['Spot.id'],
   });
 
+  const spotsPreviews = {};
+
+  const previews = await SpotImage.findAll({
+    attributes: ['url', 'spotId'],
+    where: {
+      preview: true,
+    },
+  });
+
+  previews.forEach((x) => (spotsPreviews[x.spotId] = x.url));
+
   spots.forEach((spot) => {
-    console.log(spot);
-    spot.dataValues.previewImage = 'image url';
+    spot.setDataValue('previewImage', spotsPreviews[spot.id]);
   });
 
   res.json(spots);
