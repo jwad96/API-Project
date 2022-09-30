@@ -159,7 +159,8 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         [
           Sequelize.fn(
             'ROUND',
-            Sequelize.fn('AVG', Sequelize.col('Reviews.stars'), 1)
+            Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+            1
           ),
           'avgRating',
         ],
