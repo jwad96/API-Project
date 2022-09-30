@@ -171,9 +171,6 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
           where: {
             preview: true,
           },
-          required: false,
-          duplicating: false,
-          raw: true,
         },
       ],
       where: {
@@ -181,7 +178,6 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
       },
 
       group: ['Spot.id'],
-      subQuery: false,
     })
   );
 });
