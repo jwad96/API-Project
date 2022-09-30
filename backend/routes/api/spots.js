@@ -116,6 +116,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
     },
 
     group: ['Spot.id'],
+    subQuery: false,
   });
 
   const spotsPreviews = {};
