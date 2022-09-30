@@ -181,6 +181,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
 
       group: ['Spot.id', 'SpotImage.url'],
       subQuery: false,
+      raw: true,
     })
   );
 });
