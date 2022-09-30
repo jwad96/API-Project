@@ -172,6 +172,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
             preview: true,
           },
           required: false,
+          duplicating: false,
         },
       ],
       where: {
@@ -179,6 +180,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
       },
 
       group: ['Spot.id', 'SpotImage.url'],
+      subQuery: false,
     })
   );
 });
