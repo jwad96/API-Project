@@ -73,6 +73,27 @@ const minMaxQueryContructor = (where, name, queryParam, option) => {
   }
 };
 
+router.delete('/:spotId', restoreUser, requireAuth, async (req, res, next) => {
+  const spot = await Spot.findByPk(parseInt(req.params.spotId));
+
+  if (!spot) {
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+
+  if (spot.ownerId !== req.user.id) {
+    next(requireAuthor());
+  }
+
+  await spot.destroy();
+
+  res.json({
+    message: 'Successfully deleted',
+    statusCode: 200,
+  });
+});
+
 router.put(
   '/:spotId',
   restoreUser,
