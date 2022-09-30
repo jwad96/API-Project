@@ -156,7 +156,13 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         'price',
         'createdAt',
         'updatedAt',
-        [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+        [
+          Sequelize.fn(
+            'ROUND',
+            Sequelize.fn('AVG', Sequelize.col('Reviews.stars'), 1)
+          ),
+          'avgRating',
+        ],
         [
           Sequelize.literal(
             `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="Spot"."id" WHERE preview=true LIMIT 1)`
