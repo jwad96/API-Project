@@ -13,7 +13,7 @@ const {
   handleValidationErrors,
   validateSpot,
 } = require('../../utils/validation');
-const { requireAuth, restoreUser } = require('../../utils/auth');
+const { restoreUser, requireAuth, requireAuthor } = require('../../utils/auth');
 
 const validateQueryParams = [
   query('page').default('1'),
@@ -71,6 +71,34 @@ const minMaxQueryContructor = (where, name, queryParam, option) => {
     where[name][Op.lte] = queryParam;
   }
 };
+
+router.post(
+  '/:spotId/images',
+  restoreUser,
+  requireAuth,
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(parseInt(req.params.spotId));
+
+    if (!spot) {
+      const err = new Error("Spot couldn't be found");
+      err.status = 404;
+      next(err);
+    }
+
+    if (spot.ownerId !== req.user.id) {
+      next(requireAuthor());
+    }
+
+    const newSpotImage = await spot.createSpotImage({
+      url: req.body.url,
+      preview: req.body.preview,
+    });
+
+    const { id, url, preview } = newSpotImage;
+
+    res.json({ id, url, preview });
+  }
+);
 
 router.post(
   '/',

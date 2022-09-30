@@ -57,4 +57,10 @@ const requireAuth = (req, _res, next) => {
   return next(err);
 };
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+const requireAuthor = () => {
+  const err = new Error('Forbidden');
+  err.status = 403;
+  return err;
+};
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireAuthor };
