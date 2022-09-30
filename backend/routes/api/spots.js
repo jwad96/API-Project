@@ -9,7 +9,10 @@ const {
   ReviewImage,
 } = require('../../db/models');
 const { check, query } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const {
+  handleValidationErrors,
+  validateSpot,
+} = require('../../utils/validation');
 const { requireAuth, restoreUser } = require('../../utils/auth');
 
 const validateQueryParams = [
@@ -68,6 +71,42 @@ const minMaxQueryContructor = (where, name, queryParam, option) => {
     where[name][Op.lte] = queryParam;
   }
 };
+
+router.post(
+  '/',
+  restoreUser,
+  requireAuth,
+  validateSpot,
+  handleValidationErrors,
+  async (req, res, next) => {
+    const {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    } = req.body;
+
+    const newSpot = await Spot.create({
+      ownerId: req.user.id,
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    });
+
+    res.json(newSpot);
+  }
+);
 
 router.get('/', validateQueryParams, async (req, res, next) => {
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
