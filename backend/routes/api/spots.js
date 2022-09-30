@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const {
   Spot,
   Review,
@@ -7,12 +8,83 @@ const {
   SpotImage,
   ReviewImage,
 } = require('../../db/models');
+const { check, query } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 
-router.get('/', async (req, res, next) => {
-  const spots = await Spot.findAll({
-    where: {
-      id: 1,
-    },
+const validateQueryParams = [
+  query('page').default('1'),
+  query('size').default('20'),
+  check('page')
+    .isInt({ min: 1, max: 10 })
+    .toInt()
+    .withMessage('Page must be greater than or equal to 1'),
+  check('size')
+    .isInt({ min: 1, max: 20 })
+    .toInt()
+    .withMessage('Size must be greater than or equal to 1'),
+  check('minLat')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Minimum latitude is invalid'),
+  check('maxLat')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Maximum latitude is invalid'),
+  check('minLng')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Minimum longitude is invalid'),
+  check('maxLng')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Maximum longitude is invalid'),
+  check('minPrice')
+    .optional()
+    .isFloat({ min: 0 })
+    .toFloat()
+    .withMessage('Minimum price must be greater than or equal to 0'),
+  check('maxPrice')
+    .optional()
+    .isFloat({ min: 0 })
+    .toFloat()
+    .withMessage('Maximum price must be greater than or equal to 0'),
+  handleValidationErrors,
+];
+
+const minMaxQueryContructor = (where, name, queryParam, option) => {
+  if (queryParam) {
+    where[name] = where[name] || {};
+  }
+
+  if (queryParam && option === 'min') {
+    where[name][Op.gte] = queryParam;
+  }
+  if (queryParam && option === 'max') {
+    where[name][Op.lte] = queryParam;
+  }
+};
+
+router.get('/', validateQueryParams, async (req, res, next) => {
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
+    req.query;
+
+  const where = {};
+
+  minLat = minMaxQueryContructor(where, 'lat', minLat, 'min');
+  maxLat = minMaxQueryContructor(where, 'lat', maxLat, 'max');
+  minLng = minMaxQueryContructor(where, 'lng', minLng, 'min');
+  maxLng = minMaxQueryContructor(where, 'lng', maxLng, 'max');
+  minPrice = minMaxQueryContructor(where, 'price', minPrice, 'min');
+  maxPrice = minMaxQueryContructor(where, 'price', maxPrice, 'max');
+
+  const Spots = await Spot.findAll({
+    where,
+    limit: size,
+    offset: (page - 1) * size,
     attributes: [
       'id',
       'ownerId',
@@ -30,7 +102,7 @@ router.get('/', async (req, res, next) => {
       [
         Sequelize.fn(
           'ROUND',
-          Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+          Sequelize.fn('AVG', Sequelize.col('reviews.stars')),
           1
         ),
         'avgRating',
@@ -40,6 +112,7 @@ router.get('/', async (req, res, next) => {
     include: {
       model: Review,
       attributes: [],
+      duplicating: false,
     },
 
     group: ['Spot.id'],
@@ -56,11 +129,11 @@ router.get('/', async (req, res, next) => {
 
   previews.forEach((x) => (spotsPreviews[x.spotId] = x.url));
 
-  spots.forEach((spot) => {
+  Spots.forEach((spot) => {
     spot.setDataValue('previewImage', spotsPreviews[spot.id]);
   });
 
-  res.json(spots);
+  res.json({ Spots, page, size });
 });
 
 router.get('/:spotId', async (req, res, next) => {
