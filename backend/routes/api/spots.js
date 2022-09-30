@@ -102,7 +102,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
       [
         Sequelize.fn(
           'ROUND',
-          Sequelize.fn('AVG', Sequelize.col('reviews.stars')),
+          Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
           1
         ),
         'avgRating',
