@@ -159,7 +159,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
         [
           Sequelize.literal(
-            `(SELECT url FROM SpotImages JOIN Spots ON SpotImages.spotId=Spot.id WHERE preview=true)`
+            `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="Spot"."id" WHERE preview=true)`
           ),
           'previewImage',
         ],
