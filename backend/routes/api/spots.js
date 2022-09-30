@@ -157,20 +157,18 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         'createdAt',
         'updatedAt',
         [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-        [Sequelize.col('SpotImages.url'), 'previewImage'],
+        [
+          Sequelize.literal(
+            `(SELECT url FROM SpotImages JOIN Spots ON SpotImages.spotId=Spot.id WHERE preview=true)`
+          ),
+          'previewImage',
+        ],
       ],
 
       include: [
         {
           model: Review,
           attributes: [],
-        },
-        {
-          model: SpotImage,
-          attributes: [],
-          where: {
-            preview: true,
-          },
         },
       ],
       where: {
