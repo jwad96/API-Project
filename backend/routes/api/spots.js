@@ -10,6 +10,7 @@ const {
 } = require('../../db/models');
 const { check, query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { requireAuth, restoreUser } = require('../../utils/auth');
 
 const validateQueryParams = [
   query('page').default('1'),
@@ -136,6 +137,50 @@ router.get('/', validateQueryParams, async (req, res, next) => {
   });
 
   res.json({ Spots, page, size });
+});
+
+router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
+  res.json(
+    await Spot.findAll({
+      attributes: [
+        'id',
+        'ownerId',
+        'address',
+        'city',
+        'state',
+        'country',
+        'lat',
+        'lng',
+        'name',
+        'description',
+        'price',
+        'createdAt',
+        'updatedAt',
+        [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+        [Sequelize.col('SpotImages.url'), 'previewImage'],
+      ],
+
+      include: [
+        {
+          model: Review,
+          attributes: [],
+        },
+        {
+          model: SpotImage,
+          attributes: [],
+          where: {
+            preview: true,
+          },
+          required: false,
+        },
+      ],
+      where: {
+        ownerId: req.user.id,
+      },
+
+      group: ['Spot.id'],
+    })
+  );
 });
 
 router.get('/:spotId', async (req, res, next) => {
