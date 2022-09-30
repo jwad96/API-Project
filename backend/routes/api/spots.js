@@ -178,7 +178,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         ownerId: req.user.id,
       },
 
-      group: ['Spot.id'],
+      group: ['Spot.id', 'SpotImage.url'],
     })
   );
 });
