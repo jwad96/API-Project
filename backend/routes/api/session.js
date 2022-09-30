@@ -40,7 +40,7 @@ router.post('/', validateLogin, async (req, res, next) => {
     lastName,
     email,
     username,
-    token: '',
+    token: req.cookies.token,
   });
 });
 
