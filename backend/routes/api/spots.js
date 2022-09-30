@@ -12,6 +12,7 @@ const { check, query } = require('express-validator');
 const {
   handleValidationErrors,
   validateSpot,
+  validateSpotEdit,
 } = require('../../utils/validation');
 const { restoreUser, requireAuth, requireAuthor } = require('../../utils/auth');
 
@@ -71,6 +72,53 @@ const minMaxQueryContructor = (where, name, queryParam, option) => {
     where[name][Op.lte] = queryParam;
   }
 };
+
+router.put(
+  '/:spotId',
+  restoreUser,
+  requireAuth,
+  validateSpotEdit,
+  handleValidationErrors,
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(parseInt(req.params.spotId));
+
+    if (!spot) {
+      const err = new Error("Spot couldn't be found");
+      err.status = 404;
+      next(err);
+    }
+
+    if (spot.ownerId !== req.user.id) {
+      next(requireAuthor());
+    }
+
+    const {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    } = req.body;
+
+    await spot.update({
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    });
+
+    res.json(spot);
+  }
+);
 
 router.post(
   '/:spotId/images',

@@ -10,6 +10,7 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .withMessage('Country is required'),
   body('lat')
+    .exists({ checkFalsy: true })
     .isFloat({ min: -90, max: 90 })
     .toFloat()
     .withMessage('Latitude is not valid'),
@@ -26,6 +27,52 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .withMessage('Description is required'),
   body('price')
+    .exists({ checkFalsy: true })
+    .isFloat()
+    .toFloat()
+    .withMessage('Price per day is required'),
+];
+
+const validateSpotEdit = [
+  body('address')
+    .optional()
+    .exists({ checkFalsy: true })
+    .withMessage('Street address is required'),
+  body('city')
+    .optional()
+    .exists({ checkFalsy: true })
+    .withMessage('City is required'),
+  body('state')
+    .optional()
+    .exists({ checkFalsy: true })
+    .withMessage('State is required'),
+  body('country')
+    .optional()
+    .exists({ checkFalsy: true })
+    .withMessage('Country is required'),
+  body('lat')
+    .optional()
+    .exists({ checkFalsy: true })
+    .isFloat({ min: -90, max: 90 })
+    .toFloat()
+    .withMessage('Latitude is not valid'),
+  body('lng')
+    .optional()
+    .exists({ checkFalsy: true })
+    .isFloat({ min: -180, max: 180 })
+    .toFloat()
+    .withMessage('Longitude is not valid'),
+  body('name')
+    .optional()
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 49 })
+    .withMessage('Name must be between 1 and 50 characters'),
+  body('description')
+    .optional()
+    .exists({ checkFalsy: true })
+    .withMessage('Description is required'),
+  body('price')
+    .optional()
     .exists({ checkFalsy: true })
     .isFloat()
     .toFloat()
@@ -53,5 +100,6 @@ const handleValidationErrors = (req, _res, next) => {
 
 module.exports = {
   validateSpot,
+  validateSpotEdit,
   handleValidationErrors,
 };
