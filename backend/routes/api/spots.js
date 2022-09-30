@@ -178,6 +178,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
           attributes: [],
         },
       ],
+
       where: {
         ownerId: req.user.id,
       },
