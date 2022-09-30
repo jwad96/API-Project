@@ -113,7 +113,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
       model: Review,
       attributes: [],
       duplicating: false,
-      required: true,
+      //   required: true,
     },
 
     group: ['Spot.id'],
