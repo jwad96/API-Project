@@ -27,6 +27,8 @@ const validateSpot = [
     .withMessage('Description is required'),
   body('price')
     .exists({ checkFalsy: true })
+    .isFloat()
+    .toFloat()
     .withMessage('Price per day is required'),
 ];
 
