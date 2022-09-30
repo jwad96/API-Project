@@ -179,7 +179,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         ownerId: req.user.id,
       },
 
-      group: ['Spot.id', 'SpotImage.url'],
+      group: ['Spot.id'],
       subQuery: false,
       raw: true,
     })
