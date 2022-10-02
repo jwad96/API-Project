@@ -11,7 +11,7 @@ router.delete(
 
     if (!review) {
       const err = new Error("Review couldn't be found");
-      err.statusCode = 404;
+      err.status = 404;
       return next(err);
     }
 
