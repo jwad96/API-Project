@@ -86,7 +86,7 @@ router.post(
     if (!spotExists) {
       const err = new Error("Spot couldn't be found");
       err.status = 404;
-      next(err);
+      return next(err);
     }
 
     const reviewExists = await Review.findOne({
@@ -99,7 +99,7 @@ router.post(
     if (reviewExists) {
       const err = new Error('User already has a review for this spot');
       err.status = 403;
-      next(err);
+      return next(err);
     }
 
     const { stars, review } = req.body;
@@ -121,11 +121,11 @@ router.delete('/:spotId', restoreUser, requireAuth, async (req, res, next) => {
   if (!spot) {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
-    next(err);
+    return next(err);
   }
 
   if (spot.ownerId !== req.user.id) {
-    next(requireAuthor());
+    return next(requireAuthor());
   }
 
   await spot.destroy();
@@ -148,11 +148,11 @@ router.put(
     if (!spot) {
       const err = new Error("Spot couldn't be found");
       err.status = 404;
-      next(err);
+      return next(err);
     }
 
     if (spot.ownerId !== req.user.id) {
-      next(requireAuthor());
+      return next(requireAuthor());
     }
 
     const {
@@ -193,11 +193,11 @@ router.post(
     if (!spot) {
       const err = new Error("Spot couldn't be found");
       err.status = 404;
-      next(err);
+      return next(err);
     }
 
     if (spot.ownerId !== req.user.id) {
-      next(requireAuthor());
+      return next(requireAuthor());
     }
 
     const newSpotImage = await spot.createSpotImage({
@@ -400,7 +400,7 @@ router.get('/:spotId', async (req, res, next) => {
   if (!spot) {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
-    next(err);
+    return next(err);
   }
   // Error handling end
 
@@ -457,7 +457,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
   if (!spot) {
     const err = new Error("Couldn't find a spot with the specified id");
     err.status = 404;
-    next(err);
+    return next(err);
   } else {
     res.json({ Reviews });
   }

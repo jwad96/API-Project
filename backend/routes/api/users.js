@@ -64,7 +64,7 @@ router.post('/', validateSignup, async (req, res, next) => {
 
   if (err) {
     err.errors = errors;
-    next(err);
+    return next(err);
   }
   // ERROR HANDLING END
 
