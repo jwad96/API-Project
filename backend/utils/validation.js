@@ -91,11 +91,11 @@ const validateReview = [
 ];
 
 const validateBookingDate = [
-  body('startDate').isDate(),
+  body('startDate').isDate().withMessage('Date must be YYYY-MM-DD'),
   body('endDate')
     .isDate()
     .custom((endDate, { req }) => {
-      if (req.body.startDate >= endDate) {
+      if (Date.parse(req.body.startDate) >= Date.parse(endDate)) {
         return false;
       }
       return true;
