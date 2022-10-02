@@ -81,7 +81,7 @@ router.post(
   validateReview,
   handleValidationErrors,
   async (req, res, next) => {
-    const spotExists = await Spot.findByPk(parseInt(req.params.spotId));
+    // const spotExists = await Spot.findByPk(parseInt(req.params.spotId));
 
     if (!spotExists) {
       const err = new Error("Spot couldn't be found");
@@ -89,12 +89,12 @@ router.post(
       next(err);
     }
 
-    const reviewExists = await Review.findOne({
-      where: {
-        spotId: parseInt(req.params.spotId),
-        userId: req.user.id,
-      },
-    });
+    // const reviewExists = await Review.findOne({
+    //   where: {
+    //     spotId: parseInt(req.params.spotId),
+    //     userId: req.user.id,
+    //   },
+    // });
 
     if (reviewExists) {
       const err = new Error('User already has a review for this spot');
