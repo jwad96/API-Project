@@ -104,7 +104,7 @@ router.post(
 
     const { stars, review } = req.body;
 
-    const createdReview = await req.user.createReview({
+    const createdReview = await req.user.createUserReview({
       userId: req.user.id,
       spotId: parseInt(req.params.spotId),
       review,
