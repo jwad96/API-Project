@@ -89,18 +89,20 @@ router.post(
     //   next(err);
     // }
 
-    const reviewExists = await Review.findOne({
-      where: {
-        spotId: parseInt(req.params.spotId),
-        userId: req.user.id,
-      },
-    });
+    // const reviewExists = await Review.findOne({
+    //   where: {
+    //     spotId: parseInt(req.params.spotId),
+    //     userId: req.user.id,
+    //   },
+    // });
 
-    if (reviewExists) {
-      const err = new Error('User already has a review for this spot');
-      err.status = 403;
-      next(err);
-    }
+    await Review.findAll();
+
+    // if (reviewExists) {
+    //   const err = new Error('User already has a review for this spot');
+    //   err.status = 403;
+    //   next(err);
+    // }
 
     const { stars, review } = req.body;
 
