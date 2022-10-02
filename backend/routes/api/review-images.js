@@ -13,6 +13,8 @@ router.delete('/:imageId', restoreUser, requireAuth, async (req, res, next) => {
 
   const review = Review.findByPk(reviewImage.reviewId);
 
+  return res.json({ userId: req.user.id, reviewUserId: review.userId });
+
   if (req.user.id !== review.userId) {
     return next(requireAuthor());
   }
