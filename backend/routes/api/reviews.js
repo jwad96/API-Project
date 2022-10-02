@@ -1,6 +1,78 @@
 const router = require('express').Router();
-const { Review, ReviewImage } = require('../../db/models');
+const { Review, ReviewImage, User, Spot } = require('../../db/models');
 const { restoreUser, requireAuth, requireAuthor } = require('../../utils/auth');
+const Sequelize = require('sequelize');
+
+router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
+  const reviews = await Review.findAll({
+    where: {
+      userId: req.user.id,
+    },
+
+    include: [
+      {
+        model: User,
+        as: 'reviewingUser',
+        attributes: ['id', 'firstName', 'lastName'],
+      },
+      {
+        model: Spot,
+        as: 'reviewedSpot',
+        attributes: [
+          'id',
+          'ownerId',
+          'address',
+          'city',
+          'state',
+          'country',
+          'lat',
+          'lng',
+          'name',
+          'price',
+          [
+            Sequelize.literal(
+              `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="reviewedSpot"."id" WHERE preview=true LIMIT 1)`
+            ),
+            'previewImage',
+          ],
+        ],
+      },
+      { model: ReviewImage, as: 'ReviewImages', attributes: ['id', 'url'] },
+    ],
+  });
+
+  const reviewCollection = { Reviews: [] };
+
+  for (let reviewElem of reviews) {
+    const {
+      id,
+      userId,
+      spotId,
+      review,
+      stars,
+      createdAt,
+      updatedAt,
+      reviewingUser,
+      reviewedSpot,
+      ReviewImages,
+    } = reviewElem;
+
+    reviewCollection['Reviews'].push({
+      id,
+      userId,
+      spotId,
+      review,
+      stars,
+      createdAt,
+      updatedAt,
+      User: reviewingUser,
+      Spot: reviewedSpot,
+      ReviewImages,
+    });
+  }
+
+  res.json(reviewCollection);
+});
 
 router.post(
   '/:reviewId/images',
