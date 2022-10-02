@@ -6,6 +6,7 @@ const spotsRouter = require('./spots');
 const spotImagesRouter = require('./spot-images');
 const reviewImagesRouter = require('./review-images');
 const reviewRouter = require('./reviews');
+const bookingRouter = require('./bookings');
 
 router.use(restoreUser);
 router.use('/session', sessionRouter);
@@ -14,6 +15,7 @@ router.use('/spots', spotsRouter);
 router.use('/spot-images', spotImagesRouter);
 router.use('/review-images', reviewImagesRouter);
 router.use('/reviews', reviewRouter);
+router.use('/bookings', bookingRouter);
 
 // router.get('/require-auth', requireAuth, (req, res) => {
 //   res.json(req.user);

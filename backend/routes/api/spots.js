@@ -7,10 +7,12 @@ const {
   User,
   SpotImage,
   ReviewImage,
+  Booking,
 } = require('../../db/models');
 const { check, query } = require('express-validator');
 const {
   handleValidationErrors,
+  validateBookingDate,
   validateReview,
   validateSpot,
   validateSpotEdit,
@@ -208,6 +210,73 @@ router.post(
     const { id, url, preview } = newSpotImage;
 
     res.json({ id, url, preview });
+  }
+);
+
+router.post(
+  '/:spotId/bookings',
+  restoreUser,
+  requireAuth,
+  validateBookingDate,
+  handleValidationErrors,
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(parseInt(req.params.spotId));
+
+    if (!spot) {
+      const err = new Error("Spot couldn't be found");
+      err.status = 404;
+      return next(err);
+    }
+
+    if (req.user.id === spot.ownerId) {
+      return next(requireAuthor());
+    }
+
+    const { startDate, endDate } = req.body;
+
+    const conflictingBookings = await Booking.findAll({
+      where: {
+        [Op.or]: {
+          startDate: {
+            [Op.between]: [startDate, endDate],
+          },
+          endDate: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+      },
+    });
+
+    const err = new Error(
+      'Sorry, this spot is already booked for the specified dates'
+    );
+    err.status = 403;
+    err.errors = {};
+
+    for (let booking of conflictingBookings) {
+      if (booking.startDate <= startDate && startDate <= booking.endDate) {
+        err.errors.startDate = 'Start date conflicts with an existing booking';
+      }
+
+      if (booking.startDate <= endDate && endDate <= booking.endDate) {
+        err.errors.endDate = 'End date conflicts with an existing booking';
+      }
+    }
+
+    if (Object.values(err.errors).length > 0) {
+      return next(err);
+    }
+
+    const newBooking = await Booking.create({
+      spotId: parseInt(req.params.spotId),
+      userId: req.user.id,
+      startDate,
+      endDate,
+    });
+
+    newBooking.setDataValue('id', newBooking.id);
+
+    res.json(newBooking);
   }
 );
 

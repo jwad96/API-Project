@@ -90,6 +90,19 @@ const validateReview = [
     .withMessage('Stars must be an integer from 1 to 5'),
 ];
 
+const validateBookingDate = [
+  body('startDate').isDate(),
+  body('endDate')
+    .isDate()
+    .custom((endDate, { req }) => {
+      if (req.body.startDate >= endDate) {
+        return false;
+      }
+      return true;
+    })
+    .withMessage('endDate cannot be on or before startDate'),
+];
+
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
@@ -110,6 +123,7 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 module.exports = {
+  validateBookingDate,
   validateReview,
   validateSpot,
   validateSpotEdit,
