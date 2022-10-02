@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
       Review.belongsTo(models.Spot),
         {
           foreignKey: 'spotId',
-          as: 'reviewedSpot',
+          // as: 'reviewedSpot',
         };
 
       Review.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'reviewingUser',
+        // as: 'reviewingUser',
       });
     }
   }
