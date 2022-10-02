@@ -348,7 +348,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
       [
         Sequelize.fn(
           'ROUND',
-          Sequelize.fn('AVG', Sequelize.col('Reviews.stars')),
+          Sequelize.fn('AVG', Sequelize.col('spotReview.stars')),
           1
         ),
         'avgRating',
@@ -359,6 +359,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
       model: Review,
       attributes: [],
       duplicating: false,
+      as: 'spotReview',
       //   required: true,
     },
 
