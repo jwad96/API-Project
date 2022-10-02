@@ -274,9 +274,7 @@ router.post(
       endDate,
     });
 
-    newBooking.setDataValue('id', newBooking.id);
-
-    res.json(newBooking);
+    res.json(newBooking.toJSON());
   }
 );
 
