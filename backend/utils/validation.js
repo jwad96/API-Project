@@ -79,6 +79,17 @@ const validateSpotEdit = [
     .withMessage('Price per day is required'),
 ];
 
+const validateReview = [
+  body('review')
+    .exists({ checkFalsy: true })
+    .withMessage('Review text is required'),
+  body('stars')
+    .exists()
+    .isInt({ min: 1, max: 5 })
+    .toInt()
+    .withMessage('Stars must be an integer from 1 to 5'),
+];
+
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
@@ -99,6 +110,7 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 module.exports = {
+  validateReview,
   validateSpot,
   validateSpotEdit,
   handleValidationErrors,

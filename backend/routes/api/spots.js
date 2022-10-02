@@ -11,6 +11,7 @@ const {
 const { check, query } = require('express-validator');
 const {
   handleValidationErrors,
+  validateReview,
   validateSpot,
   validateSpotEdit,
 } = require('../../utils/validation');
@@ -72,6 +73,47 @@ const minMaxQueryContructor = (where, name, queryParam, option) => {
     where[name][Op.lte] = queryParam;
   }
 };
+
+router.post(
+  '/:spotId/reviews',
+  restoreUser,
+  requireAuth,
+  validateReview,
+  handleValidationErrors,
+  async (req, res, next) => {
+    const spotExists = await Spot.findByPk(parseInt(req.params.spotId));
+
+    if (!spotExists) {
+      const err = new Error("Spot couldn't be found");
+      err.status = 404;
+      next(err);
+    }
+
+    const reviewExists = await Review.findOne({
+      where: {
+        spotId: parseInt(req.params.spotId),
+        userId: req.user.id,
+      },
+    });
+
+    if (reviewExists) {
+      const err = new Error('User already has a review for this spot');
+      err.status = 403;
+      next(err);
+    }
+
+    const { stars, review } = req.body;
+
+    const createdReview = await req.user.createReview({
+      userId: req.user.id,
+      spotId: parseInt(req.params.spotId),
+      review,
+      stars,
+    });
+
+    res.json(createdReview);
+  }
+);
 
 router.delete('/:spotId', restoreUser, requireAuth, async (req, res, next) => {
   const spot = await Spot.findByPk(parseInt(req.params.spotId));
