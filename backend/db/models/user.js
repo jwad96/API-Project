@@ -63,11 +63,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'booker',
       });
 
-      User.belongsToMany(models.Spot, {
-        through: models.Review,
-        foreignKey: 'userId',
-        as: 'reviewer',
-      });
+      // User.belongsToMany(models.Spot, {
+      //   through: models.Review,
+      //   foreignKey: 'userId',
+      //   as: 'reviewer',
+      // });
     }
   }
 
