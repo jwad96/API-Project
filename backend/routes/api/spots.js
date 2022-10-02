@@ -355,7 +355,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
         {
           model: Review,
           attributes: [],
-          as: 'userReview',
+          as: 'spotReview',
         },
       ],
 
