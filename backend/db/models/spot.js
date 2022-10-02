@@ -26,10 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       //   as: 'reviewedSpot',
       // });
 
-      // Spot.hasMany(models.Review, {
-      //   foreignKey: 'spotId',
-      //   as: 'spotReview',
-      // });
+      Spot.hasMany(models.Review, {
+        foreignKey: 'spotId',
+        as: 'spotReview',
+      });
 
       Spot.hasMany(models.SpotImage, {
         foreignKey: 'spotId',
