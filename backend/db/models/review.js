@@ -14,16 +14,15 @@ module.exports = (sequelize, DataTypes) => {
         as: 'ReviewImages',
       });
 
-      // Review.belongsTo(models.Spot),
-      //   {
-      //     foreignKey: 'spotId',
-      //     // as: 'reviewedSpot',
-      //   };
+      Review.belongsTo(models.Spot, {
+        foreignKey: 'spotId',
+        as: 'reviewedSpot',
+      });
 
-      // Review.belongsTo(models.User, {
-      //   foreignKey: 'userId',
-      //   // as: 'reviewingUser',
-      // });
+      Review.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'reviewingUser',
+      });
     }
   }
   Review.init(
