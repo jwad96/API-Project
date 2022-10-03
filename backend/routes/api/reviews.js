@@ -65,9 +65,9 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
           'price',
           [
             Sequelize.literal(
-              `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="reviewedSpot"."id" WHERE preview=true LIMIT 1)`
+              `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="User"."id" WHERE preview=true LIMIT 1)`
             ),
-            'previewImage',
+            'User',
           ],
         ],
       },
