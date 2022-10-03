@@ -1,7 +1,40 @@
 const router = require('express').Router();
 const { Review, ReviewImage, User, Spot } = require('../../db/models');
 const { restoreUser, requireAuth, requireAuthor } = require('../../utils/auth');
+const {
+  validateReview,
+  handleValidationErrors,
+} = require('../../utils/validation');
 const Sequelize = require('sequelize');
+
+router.put(
+  '/:reviewId',
+  restoreUser,
+  requireAuth,
+  validateReview,
+  handleValidationErrors,
+  async (req, res, next) => {
+    const reviewToEdit = await Review.findByPk(parseInt(req.params.reviewId));
+
+    if (!reviewToEdit) {
+      const err = new Error("Review couldn't be found");
+      err.status = 404;
+      return next(err);
+    }
+
+    if (reviewToEdit.userId !== req.user.id) {
+      return next(requireAuthor());
+    }
+
+    const { review, stars } = req.body;
+    reviewToEdit.review = review;
+    reviewToEdit.stars = stars;
+
+    await reviewToEdit.save();
+
+    res.json(reviewToEdit);
+  }
+);
 
 router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
   const reviews = await Review.findAll({
