@@ -566,8 +566,8 @@ router.get('/:spotId/reviews', async (req, res, next) => {
   const Reviews = await Review.findAll({
     attributes: [
       'id',
-      'spotId',
       'userId',
+      'spotId',
       'review',
       'stars',
       'createdAt',
