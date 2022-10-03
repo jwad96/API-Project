@@ -374,6 +374,7 @@ router.post(
       price,
     });
 
+    res.status(201);
     res.json(newSpot);
   }
 );
