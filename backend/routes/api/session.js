@@ -52,7 +52,7 @@ router.delete('/', (_req, res) => {
 module.exports = router;
 
 // restore session user
-router.get('/', restoreUser, (req, res) => {
+router.get('/', restoreUser, requireAuth, (req, res) => {
   const { user } = req;
   if (user) {
     res.json({
