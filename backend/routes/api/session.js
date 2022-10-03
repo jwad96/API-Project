@@ -60,7 +60,7 @@ router.get('/', restoreUser, requireAuth, async (req, res) => {
   const user = await User.findByPk(req.user.id);
   if (user) {
     res.json({
-      user: user.toSafeObject(),
+      user,
     });
   } else {
     res.json({});
