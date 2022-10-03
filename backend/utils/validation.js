@@ -103,7 +103,7 @@ const validateBookingDate = [
     .withMessage('endDate cannot be on or before startDate'),
 ];
 
-const validateUrl = [body('url').exists({ falsy: true })];
+const validateUrl = [body('url').exists({ checkFalsy: true })];
 
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
