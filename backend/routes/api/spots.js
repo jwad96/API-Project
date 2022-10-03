@@ -175,6 +175,7 @@ router.post(
       stars,
     });
 
+    res.status(201);
     res.json(createdReview);
   }
 );
@@ -594,7 +595,6 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     err.status = 404;
     return next(err);
   } else {
-    res.status(201);
     res.json({ Reviews });
   }
 });
