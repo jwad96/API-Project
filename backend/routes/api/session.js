@@ -56,8 +56,8 @@ router.delete('/', (_req, res) => {
 module.exports = router;
 
 // restore session user
-router.get('/', restoreUser, requireAuth, (req, res) => {
-  const { user } = req;
+router.get('/', restoreUser, requireAuth, async (req, res) => {
+  const user = await User.findByPk(req.user.id);
   if (user) {
     res.json({
       user: user.toSafeObject(),
