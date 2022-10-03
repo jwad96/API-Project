@@ -3,6 +3,7 @@ const { Review, ReviewImage, User, Spot } = require('../../db/models');
 const { restoreUser, requireAuth, requireAuthor } = require('../../utils/auth');
 const {
   validateReview,
+  validateUrl,
   handleValidationErrors,
 } = require('../../utils/validation');
 const Sequelize = require('sequelize');
@@ -111,6 +112,8 @@ router.post(
   '/:reviewId/images',
   restoreUser,
   requireAuth,
+  validateUrl,
+  handleValidationErrors,
   async (req, res, next) => {
     const review = await Review.findByPk(parseInt(req.params.reviewId));
 
