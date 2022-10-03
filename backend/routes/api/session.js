@@ -57,19 +57,12 @@ module.exports = router;
 
 // restore session user
 router.get('/', restoreUser, requireAuth, async (req, res) => {
-  console.log(req.user.id);
-  const user = await User.findByPk(req.user.id);
-  console.log(user);
+  const user = await User.scope('currentUser').findByPk(req.user.id);
 
-  const responseBody = {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    username: user.username,
-  };
   if (user) {
-    res.json(responseBody);
+    const { id, username, firstName, lastName, email } = user;
+    const responseObj = { id, firstName, lastName, email, username };
+    res.json(responseObj);
   } else {
     res.json({});
   }
