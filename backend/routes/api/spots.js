@@ -76,6 +76,67 @@ const minMaxQueryContructor = (where, name, queryParam, option) => {
   }
 };
 
+router.get(
+  '/:spotId/bookings',
+  restoreUser,
+  requireAuth,
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(parseInt(req.params.spotId));
+
+    if (!spot) {
+      const err = new Error("Spot couldn't be found");
+      err.status = 404;
+      return next(err);
+    }
+
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: parseInt(req.params.spotId),
+      },
+
+      include: {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName'],
+      },
+    });
+
+    const bookingsCollection = { Bookings: [] };
+
+    for (let booking of bookings) {
+      const {
+        User,
+        id,
+        spotId,
+        userId,
+        startDate,
+        endDate,
+        createdAt,
+        updatedAt,
+      } = booking;
+      if (spot.ownerId === req.user.id) {
+        bookingsCollection['Bookings'].push({
+          User,
+          id,
+          spotId,
+          userId,
+          startDate,
+          endDate,
+          createdAt,
+          updatedAt,
+        });
+      } else {
+        bookingsCollection['Bookings'].push({
+          spotId,
+          startDate,
+          endDate,
+        });
+      }
+    }
+
+    res.json(bookingsCollection);
+  }
+);
+
 router.post(
   '/:spotId/reviews',
   restoreUser,
