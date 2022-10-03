@@ -447,53 +447,53 @@ router.get('/', validateQueryParams, async (req, res, next) => {
 });
 
 router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
-  res.json(
-    await Spot.findAll({
-      attributes: [
-        'id',
-        'ownerId',
-        'address',
-        'city',
-        'state',
-        'country',
-        'lat',
-        'lng',
-        'name',
-        'description',
-        'price',
-        'createdAt',
-        'updatedAt',
-        [
-          Sequelize.fn(
-            'ROUND',
-            Sequelize.fn('AVG', Sequelize.col('spotReview.stars')),
-            1
-          ),
-          'avgRating',
-        ],
-        [
-          Sequelize.literal(
-            `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="Spot"."id" WHERE preview=true LIMIT 1)`
-          ),
-          'previewImage',
-        ],
+  const Spots = await Spot.findAll({
+    attributes: [
+      'id',
+      'ownerId',
+      'address',
+      'city',
+      'state',
+      'country',
+      'lat',
+      'lng',
+      'name',
+      'description',
+      'price',
+      'createdAt',
+      'updatedAt',
+      [
+        Sequelize.fn(
+          'ROUND',
+          Sequelize.fn('AVG', Sequelize.col('spotReview.stars')),
+          1
+        ),
+        'avgRating',
       ],
-
-      include: [
-        {
-          model: Review,
-          attributes: [],
-          as: 'spotReview',
-        },
+      [
+        Sequelize.literal(
+          `(SELECT "url" FROM "SpotImages" JOIN "Spots" ON "SpotImages"."spotId"="Spot"."id" WHERE preview=true LIMIT 1)`
+        ),
+        'previewImage',
       ],
+    ],
 
-      where: {
-        ownerId: req.user.id,
+    include: [
+      {
+        model: Review,
+        attributes: [],
+        as: 'spotReview',
       },
+    ],
 
-      group: ['Spot.id'],
-    })
-  );
+    where: {
+      ownerId: req.user.id,
+    },
+
+    group: ['Spot.id'],
+  });
+
+  res.json({ Spots });
 });
 
 router.get('/:spotId', async (req, res, next) => {
