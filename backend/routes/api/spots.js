@@ -16,6 +16,7 @@ const {
   validateReview,
   validateSpot,
   validateSpotEdit,
+  validateUrl,
 } = require('../../utils/validation');
 const { restoreUser, requireAuth, requireAuthor } = require('../../utils/auth');
 
@@ -250,6 +251,8 @@ router.post(
   '/:spotId/images',
   restoreUser,
   requireAuth,
+  validateUrl,
+  handleValidationErrors,
   async (req, res, next) => {
     const spot = await Spot.findByPk(parseInt(req.params.spotId));
 

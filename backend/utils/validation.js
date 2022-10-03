@@ -103,6 +103,8 @@ const validateBookingDate = [
     .withMessage('endDate cannot be on or before startDate'),
 ];
 
+const validateUrl = [body('url').exists({ falsy: true })];
+
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
 
@@ -127,5 +129,6 @@ module.exports = {
   validateReview,
   validateSpot,
   validateSpotEdit,
+  validateUrl,
   handleValidationErrors,
 };
