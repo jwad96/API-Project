@@ -1,5 +1,49 @@
 const { validationResult, check, body } = require('express-validator');
 
+const validateQueryParams = [
+  query('page').default('1'),
+  query('size').default('20'),
+  check('page')
+    .isInt({ min: 1, max: 10 })
+    .toInt()
+    .withMessage('Page must be greater than or equal to 1'),
+  check('size')
+    .isInt({ min: 1, max: 20 })
+    .toInt()
+    .withMessage('Size must be greater than or equal to 1'),
+  check('minLat')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Minimum latitude is invalid'),
+  check('maxLat')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Maximum latitude is invalid'),
+  check('minLng')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Minimum longitude is invalid'),
+  check('maxLng')
+    .optional()
+    .isFloat()
+    .toFloat()
+    .withMessage('Maximum longitude is invalid'),
+  check('minPrice')
+    .optional()
+    .isFloat({ min: 0 })
+    .toFloat()
+    .withMessage('Minimum price must be greater than or equal to 0'),
+  check('maxPrice')
+    .optional()
+    .isFloat({ min: 0 })
+    .toFloat()
+    .withMessage('Maximum price must be greater than or equal to 0'),
+  handleValidationErrors,
+];
+
 const validateSpot = [
   body('address')
     .exists({ checkFalsy: true })
@@ -127,6 +171,7 @@ const handleValidationErrors = (req, _res, next) => {
 module.exports = {
   validateBookingDate,
   validateReview,
+  validateQueryParams,
   validateSpot,
   validateSpotEdit,
   validateUrl,
