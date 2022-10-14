@@ -56,11 +56,10 @@ router.delete('/', (_req, res) => {
 module.exports = router;
 
 // restore session user
-router.get('/', restoreUser, requireAuth, async (req, res) => {
-  const user = await User.scope('currentUser').findByPk(req.user.id);
-
-  if (user) {
-    const { id, username, firstName, lastName, email } = user;
+// router.get('/', restoreUser, requireAuth, async (req, res) => {
+router.get('/', restoreUser, async (req, res) => {
+  if (req.user) {
+    const { id, username, firstName, lastName, email } = req.user;
     const responseObj = { id, firstName, lastName, email, username };
     res.json(responseObj);
   } else {
