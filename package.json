@@ -20,6 +20,5 @@
   "bugs": {
     "url": "https://github.com/jwad96/API-Project/issues"
   },
-  "homepage": "https://github.com/jwad96/API-Project#readme",
-  "proxy": "http://localhost:8000"
+  "homepage": "https://github.com/jwad96/API-Project#readme"
 }
