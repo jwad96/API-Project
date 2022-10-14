@@ -1,4 +1,4 @@
-const { validationResult, check, body } = require('express-validator');
+const { validationResult, check, body, query } = require('express-validator');
 
 const validateQueryParams = [
   query('page').default('1'),
