@@ -41,7 +41,6 @@ const validateQueryParams = [
     .isFloat({ min: 0 })
     .toFloat()
     .withMessage('Maximum price must be greater than or equal to 0'),
-  handleValidationErrors,
 ];
 
 const validateSpot = [
