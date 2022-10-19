@@ -46,6 +46,7 @@ const restoreUser = (req, res, next) => {
 };
 
 const requireAuth = (req, _res, next) => {
+  console.log(req.body);
   if (req.user) {
     return next();
   }

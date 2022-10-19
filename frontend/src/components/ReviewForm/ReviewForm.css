@@ -1,0 +1,7 @@
+#rating {
+  display: inline;
+}
+
+#review-error {
+  color: red;
+}
