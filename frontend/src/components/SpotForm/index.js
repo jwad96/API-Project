@@ -102,7 +102,7 @@ const SpotForm = () => {
 
 return (
     <>
-    <form>
+    <form className="spot-form">
         <div className="input-wrapper">
             <label htmlFor="address"></label>
             <input id="address" placeholder="Address" value={address} onChange={e=>setAddress(e.target.value)}></input>

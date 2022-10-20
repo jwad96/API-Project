@@ -1,7 +1,8 @@
 import {csrfFetch} from "./csrf";
 
 const POPULATE = "reviews/populate";
-const DELETE = "reviews/delete"
+const DELETE = "reviews/delete";
+const ADD = "reviews/add";
 
 const populateReviews = (reviews) => {
     return {
@@ -14,6 +15,13 @@ const removeReview = (reviewId) => {
     return {
         type: DELETE,
         reviewId
+    }
+}
+
+const addReview = (review) => {
+    return {
+        type: ADD,
+        review
     }
 }
 
@@ -36,6 +44,18 @@ export const deleteReview = (reviewId) => async (dispatch) => {
     dispatch(removeReview(reviewId));
 }
 
+export const createReview = (spotId, review, user, reviewImages=[]) => async (dispatch) => {
+    const createdReview = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: "POST",
+        body: JSON.stringify(review)
+    }).then(res => res.json())
+
+    createdReview.User = user;
+    createdReview.ReviewImages = reviewImages;
+
+    dispatch(addReview(createdReview));
+}
+
 
 const reviewReducer = (state={}, action) => {
     if (action.type === POPULATE) {
@@ -46,6 +66,13 @@ const reviewReducer = (state={}, action) => {
         const newSpotReviews = {...state.spot}
         delete newSpotReviews[action.reviewId]
         return {...state, spot: newSpotReviews}
+    }
+
+    if (action.type === ADD) {
+        const spotReviews = {...state.spot}
+        spotReviews[action.review.id] = action.review
+
+        return {...state, spot: spotReviews}
     }
     return state;
 }
