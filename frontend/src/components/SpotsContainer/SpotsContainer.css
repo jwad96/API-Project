@@ -1,0 +1,37 @@
+#spots-container {
+  margin: 0 auto;
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.spot-image {
+  background-color: lightblue;
+  border-radius: 15px;
+  border: 1px solid lightblue;
+  height: 354px;
+  width: 373px;
+}
+
+.spot {
+  margin-bottom: 50px;
+  margin-left: 30px;
+
+}
+
+.title {
+  font-weight: bold;
+}
+
+.title + div {
+  color: gray;
+}
+
+.spot-info > div:last-of-type {
+  margin-top: 10px;
+  font-weight: bold
+}
+
+.night {
+  font-weight: normal;
+}

@@ -20,31 +20,28 @@ function Navigation({ isLoaded }){
 
   let sessionLinks;
   if (sessionUser) {
-    sessionLinks = (<>
-      <ProfileButton user={sessionUser} />
+    sessionLinks = (<div id="session-links">
       <button id="create-spot" onClick={onCreateSpot}>Add spot</button>
+      <ProfileButton user={sessionUser} />
       <Route path="/spot-form">
         <SpotForm />
       </Route>
-    </>
+    </div>
     );
   } else {
     sessionLinks = (
-      <>
-        <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
-        <button onClick={e=>dispatch(testLogin())}>Demo-lition</button>
-      </>
+      <div id="session-links">
+        {!sessionUser && <LoginFormModal />}
+        <ProfileButton user={sessionUser} />
+      </div>
     );
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-    </ul>
+    <div id="nav">
+      <NavLink id="home-button" exact to="/">Home</NavLink>
+      {isLoaded && sessionLinks}
+    </div>
   );
 }
 

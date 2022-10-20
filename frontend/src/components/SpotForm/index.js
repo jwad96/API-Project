@@ -111,55 +111,55 @@ return (
         
         <div className="input-wrapper">
             <label htmlFor="city"></label>
-            <input id="city" placeholder="City" value={city} onChange={e=>setCity(e.target.value)}></input>
+            <input className="spot-form-input" id="city" placeholder="City" value={city} onChange={e=>setCity(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[1]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="state"></label>
-            <input id="state" placeholder="State" value={state} onChange={e=>setState(e.target.value)}></input>
+            <input className="spot-form-input" id="state" placeholder="State" value={state} onChange={e=>setState(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[2]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="country"></label>
-            <input id="country" placeholder="Country" value={country} onChange={e=>setCountry(e.target.value)}></input>
+            <input className="spot-form-input" id="country" placeholder="Country" value={country} onChange={e=>setCountry(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[3]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="lat"></label>
-            <input id="lat" placeholder="Lat" value={lat} onChange={e=>setLat(e.target.value)}></input>
+            <input className="spot-form-input" id="lat" placeholder="Lat" value={lat} onChange={e=>setLat(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[4]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="lng"></label>
-            <input id="lng" placeholder="Lng" value={lng} onChange={e=>setLng(e.target.value)}></input>
+            <input className="spot-form-input" id="lng" placeholder="Lng" value={lng} onChange={e=>setLng(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[5]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="name"></label>
-            <input id="name" placeholder="Name" value={name} onChange={e=>setName(e.target.value)}></input>
+            <input className="spot-form-input" id="name" placeholder="Name" value={name} onChange={e=>setName(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[6]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="description"></label>
-            <input id="description" placeholder="Description" value={description} onChange={e=>setDescription(e.target.value)}></input>
+            <input className="spot-form-input" id="description" placeholder="Description" value={description} onChange={e=>setDescription(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[7]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="price"></label>
-            <input id="price" placeholder="Price" value={price} onChange={e=>setPrice(e.target.value)}></input>
+            <input className="spot-form-input" id="price" placeholder="Price" value={price} onChange={e=>setPrice(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[8]}</span>}
         </div>
 
         <div className="input-wrapper">
             <label htmlFor="preview"></label>
-            <input id="preview" placeholder="Preview" value={previewImage} onChange={e=>setPreviewImage(e.target.value)}></input>
+            <input className="spot-form-input" id="preview" placeholder="Preview" value={previewImage} onChange={e=>setPreviewImage(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[9]}</span>}
         </div>
 

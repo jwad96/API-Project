@@ -1,0 +1,143 @@
+#nav {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom: 1px solid rgb(95, 135, 148);
+  height: 80px;
+  width: 100%;
+}
+
+#session-links {
+  margin-top: 15px;
+  margin-right: 20px;
+  width: 300px;
+  display: flex;
+  justify-content: space-around
+}
+
+
+#create-spot {
+  font-size: 18px;
+  height: 42px;
+  width: 104px;
+  border-radius: 20px;
+  border: none;
+  background-color: white;
+  color: rgb(76, 95, 102);
+}
+
+#create-spot:hover {
+  background-color: rgb(206, 235, 245);
+  cursor: pointer;
+}
+
+#home-button, #home-button:visited {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  width: 118px;
+  border-radius: 5px;
+  background-color: buttonface;
+  margin-left: 20px;
+  margin-top: 8px;
+  text-decoration: none;
+  color: black;
+}
+
+.profile-button {
+  position: relative;
+  width: 77px;
+  height: 42px;
+  border-radius: 20px;
+  border: none;
+  background-color: white;
+  border: 1px solid lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.profile-button:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 5px rgb(169, 194, 202)
+}
+
+.profile-button-active {
+  box-shadow: 0px 0px 5px rgb(169, 194, 202)
+}
+
+#logout-button {
+  border: none;
+  background-color: inherit;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: rgb(76, 95, 102);
+  height: 42px;
+  border-radius: 0px 0px 10px 10px;
+  padding-left: 10px;
+}
+
+.fa-user-circle {
+  font-size: 25px;
+  color: rgb(87, 143, 161);
+}
+
+.fa-bars {
+  margin-top: 2px;
+  font-size: 22px;
+  color: rgb(87, 143, 161);
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  border: 1px solid lightblue;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgb(169, 194, 202)
+}
+
+.profile-dropdown > li {
+  height: 42px;
+  width: 240px;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 1px;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  line-height: 42px;
+  text-align: left;
+  padding-left: 10px;
+  font-size: 15px;
+  color: rgb(76, 95, 102);
+}
+
+.profile-dropdown > li:last-of-type:hover {
+  background-color:rgb(206, 235, 245);
+}
+
+#username-display {
+  border-radius: 10px 10px 0px 0px;
+  border-bottom: none;
+  font-weight: bold;
+}
+
+#email-display {
+  border-radius: 10px 10px 0px 0px;
+  /* padding-bottom: 50px; */
+  line-height: 20px;
+}
+
+.profile-dropdown > li:last-of-type {
+  border-radius: 0px 0px 10px 10px;
+  padding-left: 0px;
+
+}
+
+.profile-dropdown > :not(li:last-of-type) {
+  cursor: default;
+}

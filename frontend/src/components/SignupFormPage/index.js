@@ -35,7 +35,7 @@ function SignupFormPage() {
     <form onSubmit={handleSubmit}>
       <ul>
         <li>{errors.length === 0 ? "undefined" : "not undefined"}</li>
-        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        {(console.log("errors", errors)) || errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
       <label>
         Email

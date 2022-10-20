@@ -10,7 +10,8 @@ import ReviewContainer from "../ReviewContainer";
 const SingleSpot = () => {
     const {spotId} = useParams();
     const spot = useSelector(state => state.spots.singleSpot);
-    const userId = useSelector(state => state.session.user.id);
+    const user = useSelector(state => state.session.user);
+    const userId = user ? user.id : null;
 
     const [ownSpot, setOwnSpot] = useState(false);
 

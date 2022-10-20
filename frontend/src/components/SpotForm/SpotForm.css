@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-input {
+.spot-form-input {
   width: 10%;
   min-width: 180px;
   border-radius: 5px;

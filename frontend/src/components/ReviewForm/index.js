@@ -61,9 +61,9 @@ const ReviewForm = ({spotId}) => {
     }
 
     return (
-    <form onSubmit={onFormSubmit}>
-        <label htmlFor="review"></label>
-        <textarea placeholder="Review" id="review" value={review} onChange={e=>setReview(e.target.value)}></textarea>
+    <form id="review-form" onSubmit={onFormSubmit}>
+        <label htmlFor="review-text"></label>
+        <textarea  placeholder="Review" id="review-text" value={review} onChange={e=>setReview(e.target.value)}></textarea>
         {submitted && errors[0] && <div className="validationError">{errors[0]}</div>}
 
         <label htmlFor="rating">1</label>
