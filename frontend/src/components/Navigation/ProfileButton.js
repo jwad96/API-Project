@@ -1,13 +1,15 @@
 // frontend/src/components/Navigation/ProfileButton.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
 import {testLogin} from "../../store/session";
 import LoginFormModal from '../LoginFormModal';
 import { NavLink } from 'react-router-dom';
+import {ModalContext} from "../../context/Modal";
 
 function ProfileButton({ user }) {
+  const {setShowSignupModal, setShowLoginModal} = useContext(ModalContext);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [profileButtonActive, setProfileButtonActive] = useState("");
@@ -53,10 +55,11 @@ function ProfileButton({ user }) {
     menu = (
       <ul className="profile-dropdown">
         <li>
-          <LoginFormModal />
+          <button onClick={e=>setShowLoginModal(true)} id="login-button">Login</button>
         </li>
         <li>
-          <NavLink to="/signup"><button>Sign Up</button></NavLink>
+          {/* <NavLink to="/signup"><button>Sign Up</button></NavLink> */}
+          <button onClick={e=>setShowSignupModal(true)}>Sign Up</button>
         </li>
         <li><button onClick={e=>dispatch(testLogin())}>Demo-lition</button></li>
       </ul>

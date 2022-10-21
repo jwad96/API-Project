@@ -1,11 +1,14 @@
 // frontend/src/components/SignupFormPage/index.js
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
 
+import {ModalContext} from "../../context/Modal";
+
 function SignupFormPage() {
+  const {setShowSignupModal} = useContext(ModalContext);
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -18,15 +21,17 @@ function SignupFormPage() {
 
   if (sessionUser) return <Redirect to="/" />;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
+      const data = await dispatch(sessionActions.signup({ email, username, firstName, lastName, password })).catch(res=>res.json())
+
+      if (data && data.errors) {
+        return setErrors(Object.values(data.errors))
+      } else {
+        return setShowSignupModal(false);
+      }
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
@@ -34,7 +39,6 @@ function SignupFormPage() {
   return (
     <form onSubmit={handleSubmit}>
       <ul>
-        <li>{errors.length === 0 ? "undefined" : "not undefined"}</li>
         {(console.log("errors", errors)) || errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
       <label>

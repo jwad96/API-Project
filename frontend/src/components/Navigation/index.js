@@ -9,6 +9,8 @@ import LoginFormModal from '../LoginFormModal';
 import SpotForm from "../SpotForm";
 import './Navigation.css';
 
+import SignupFormModal from "../SignupFormModal";
+
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ function Navigation({ isLoaded }){
     sessionLinks = (
       <div id="session-links">
         {!sessionUser && <LoginFormModal />}
+        {!sessionUser && <SignupFormModal />}
         <ProfileButton user={sessionUser} />
       </div>
     );

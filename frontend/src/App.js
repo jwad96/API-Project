@@ -9,6 +9,8 @@ import Navigation from "./components/Navigation";
 import SingleSpot from "./components/SingleSpot";
 import SpotsContainer from "./components/SpotsContainer"
 
+import {Modal} from "./context/Modal";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -29,9 +31,11 @@ function App() {
           <Route path="/" exact>
             <SpotsContainer />
           </Route>
-          <Route path="/signup" exact>
-            <SignupFormPage />
-          </Route>
+          {/* <Route path="/signup">
+            <Modal>
+              <SignupFormPage />
+            </Modal>
+          </Route> */}
           <Route path="/spots/:spotId">
             <SingleSpot />
           </Route>

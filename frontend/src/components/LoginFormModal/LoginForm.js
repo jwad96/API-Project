@@ -1,9 +1,12 @@
 // frontend/src/components/LoginFormModal/LoginForm.js
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 
+import {ModalContext} from "../../context/Modal";
+
 function LoginForm() {
+  const {setShowLoginModal} = useContext(ModalContext);
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +14,7 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowLoginModal(false);
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
