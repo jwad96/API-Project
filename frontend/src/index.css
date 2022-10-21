@@ -21,3 +21,7 @@ a, a:visited {
   text-decoration: none;
   color: inherit;
 }
+
+input:focus {
+  outline: 2px solid lightblue;
+}

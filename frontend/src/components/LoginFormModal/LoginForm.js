@@ -4,6 +4,7 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 
 import {ModalContext} from "../../context/Modal";
+import "./LoginForm.css";
 
 function LoginForm() {
   const {setShowLoginModal} = useContext(ModalContext);
@@ -12,45 +13,51 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setShowLoginModal(false);
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
-      async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      }
-    );
+    const data = await dispatch(sessionActions.login({ credential, password })).catch((res) => res.json());
+    console.log(data.errors);
+    if (data && data.message){
+      setErrors([data.message]);
+      console.log("BINGBANG")
+    } else {
+      console.log("BOOMBOOM");
+      setShowLoginModal(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
+    <>
+    <form onSubmit={handleSubmit} id="login-form">
+      <h2 id="login-header">Welcome back!</h2>
+      <ul id="login-errors">
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      <label>
-        Username or Email
+      <label htmlFor="username-input-login" />
         <input
+          id="username-input-login"
+          placeholder="Username/Email"
           type="text"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password
+      <div></div>
+      <label htmlFor="password-input-login" />
         <input
+          id="password-input-login"
+          placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Log In</button>
+      <button type="submit" id="submit-login">Log In</button>
     </form>
+    </>
   );
 }
 

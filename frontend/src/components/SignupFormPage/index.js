@@ -6,6 +6,7 @@ import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
 
 import {ModalContext} from "../../context/Modal";
+import "./SignupForm.css";
 
 function SignupFormPage() {
   const {setShowSignupModal} = useContext(ModalContext);
@@ -37,65 +38,71 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
+    <form onSubmit={handleSubmit} id="signup-form">
+      <h2 id="signup-header">Welcome to HairBnB!</h2>
+      <ul id="signup-errors">
         {(console.log("errors", errors)) || errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
-      <label>
-        Email
+      <label htmlFor="email-input" />
         <input
+          className="signup-input"
+          id="email-input"
+          placeholder="Email"
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Username
+      <label htmlFor="username-input"/>
         <input
+          className="signup-input"
+          id="username-input"
+          placeholder="Username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-      </label>
-      <label>
-        firstName
+      <label htmlFor="firstname-input" />
         <input
+          className="signup-input"
+          id="firstname-input"
+          placeholder="First Name"
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-      </label>
-      <label>
-        lastName
+      <label id="lastname-input" />
         <input
+          className="signup-input"
+          placeholder="Last Name"
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password
+      <label htmlFor="password-input" />
         <input
+          className="signup-input"
+          id="password-input"
+          placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Confirm Password
+      <label htmlFor="confirm-password-input"/>
         <input
+          className="signup-input"
+          id="confirm-password-input"
+          placeholder="Confirm password"
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Sign Up</button>
+      <button id="submit-signup" type="submit">Sign Up</button>
     </form>
   );
 }
