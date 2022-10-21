@@ -1,16 +1,20 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import {useHistory, useParams, useLocation} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {addSpot, editSpot} from "../../store/spot";
 
+import {ModalContext} from "../../context/Modal";
+
 import "./SpotForm.css";
 
 
-const SpotForm = () => {
+const SpotForm = ({edit}) => {
     const {spotId} = useParams();
+    const {setShowSpotModal} = useContext(ModalContext);
     const currentSpot = useSelector(state => state.spots.allSpots[spotId]);
     const location = useLocation();
-    const isEdit = location.pathname.split("/").at(-1) === "edit";
+    // const isEdit = location.pathname.split("/").at(-1) === "edit";
+    const isEdit = edit;
 
     const [address, setAddress] = useState(isEdit ? currentSpot.address : "")
     const [city, setCity] = useState(isEdit ? currentSpot.city : "")
@@ -95,7 +99,7 @@ const SpotForm = () => {
             } else {
                 dispatch(addSpot(spot));
             }
-            console.log("SUBMITTED BABY");
+            setShowSpotModal(false);
             history.push("/");
         }
     }

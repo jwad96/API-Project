@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {useSelector, useDispatch} from "react-redux"
 import {useParams, useHistory} from "react-router"
 import {Route} from "react-router-dom"
@@ -6,9 +6,14 @@ import {getSingleSpot, deleteSpot} from "../../store/spot";
 import SpotForm from "../SpotForm";
 import ReviewContainer from "../ReviewContainer";
 
+import SpotFormModal from "../SpotFormModal";
+import {ModalContext} from "../../context/Modal"
+
 
 const SingleSpot = () => {
     const {spotId} = useParams();
+    const {setShowSpotEditModal,
+           showReviewModal, setShowReviewModal} = useContext(ModalContext);
     const spot = useSelector(state => state.spots.singleSpot);
     const user = useSelector(state => state.session.user);
     const userId = user ? user.id : null;
@@ -22,6 +27,7 @@ const SingleSpot = () => {
         dispatch(getSingleSpot(spotId));
     }, [dispatch, spotId])
 
+
     useEffect(() => {
         if (spot) {
             setOwnSpot(userId === spot.ownerId);
@@ -33,7 +39,8 @@ const SingleSpot = () => {
     }
 
     const onEdit = (e) => {
-        history.push(`/spots/${spotId}/edit`);
+        // history.push(`/spots/${spotId}/edit`);
+        setShowSpotEditModal(true);
     }
 
     return spot && (
@@ -43,9 +50,10 @@ const SingleSpot = () => {
             <>
               <button onClick={onDelete}>DELETE</button>
               <button onClick={onEdit}>EDIT</button>
-              <Route path={`/spots/:spotId/edit`}>
+              {/* <Route path={`/spots/:spotId/edit`}>
                 <SpotForm />
-              </Route>
+              </Route> */}
+              <SpotFormModal edit={true}/>
             </>
           )}
           <ReviewContainer spotId={spotId}/>

@@ -9,12 +9,21 @@ export function ModalProvider({ children }) {
   const [modalNode, setModalNode] = useState();
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showSpotModal, setShowSpotModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showSpotEditModal, setShowSpotEditModal] = useState(false);
 
   const values = {
     modalNode,
+    showReviewModal,
+    showSpotEditModal,
+    showSpotModal,
     showLoginModal,
-    setShowLoginModal,
     showSignupModal,
+    setShowReviewModal,
+    setShowSpotEditModal,
+    setShowSpotModal,
+    setShowLoginModal,
     setShowSignupModal
   }
 
