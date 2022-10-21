@@ -43,25 +43,25 @@ function ProfileButton({ user }) {
   if (user) {
     console.log("HERE IS USER", user)
     menu = (
-        <ul className="profile-dropdown">
+        <ul className="profile-dropdown" id="logged-in">
           <li id="username-display">{user.username}</li>
           <li id="email-display">{user.email}</li>
           <li>
-            <button id="logout-button" onClick={logout}>Log Out</button>
+            <button className="menu-button" id="logout-button" onClick={logout}>Log Out</button>
           </li>
         </ul>
     )
   } else if (!user) {
     menu = (
-      <ul className="profile-dropdown">
+      <ul className="profile-dropdown" id="logged-out">
         <li>
-          <button onClick={e=>setShowLoginModal(true)} id="login-button">Login</button>
+          <button onClick={e=>setShowLoginModal(true)} id="login-button" className="menu-button">Login</button>
         </li>
         <li>
           {/* <NavLink to="/signup"><button>Sign Up</button></NavLink> */}
-          <button onClick={e=>setShowSignupModal(true)}>Sign Up</button>
+          <button  className="menu-button" id="signup-button" onClick={e=>setShowSignupModal(true)}>Sign Up</button>
         </li>
-        <li><button onClick={e=>dispatch(testLogin())}>Demo-lition</button></li>
+        <li><button className="menu-button" id="demo-button" onClick={e=>dispatch(testLogin())}>Demo-lition</button></li>
       </ul>
     )
 
