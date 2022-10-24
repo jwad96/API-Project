@@ -16,7 +16,6 @@ const SingleSpot = () => {
     const {setShowSpotEditModal} = useContext(ModalContext);
     const spot = useSelector(state => state.spots.singleSpot);
     const user = useSelector(state => state.session.user);
-    console.log("WE RENDERIN");
     const userId = user ? user.id : null;
 
     const [ownSpot, setOwnSpot] = useState(false);
@@ -61,7 +60,7 @@ const SingleSpot = () => {
                 )}
             </div>
             <div id="single-spot-subheading">
-              <div><i class="fa-solid fa-star"></i>  {spot.avgStarRating}</div>
+              <div><i class="fa-solid fa-star"></i>  {spot.avgStarRating.toFixed(2)}</div>
               <div>{spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}</div>
               <div>{spot.city}, {spot.state}, {spot.country}</div>
             </div>

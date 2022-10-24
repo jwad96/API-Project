@@ -7,7 +7,7 @@ const Review = ({review, stars, isOwn, reviewId, spotId}) => {
     const dispatch = useDispatch();
 
     const onDelete = (e) => {
-        dispatch(deleteReview(reviewId))
+        dispatch(deleteReview(reviewId, spotId))
     }    
 
     return <div className="individual-review">

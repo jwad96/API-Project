@@ -1,4 +1,5 @@
 import {csrfFetch} from "./csrf";
+import {getSingleSpot} from "./spot";
 
 const POPULATE = "reviews/populate";
 const DELETE = "reviews/delete";
@@ -36,12 +37,13 @@ export const getReviews = (id) => async (dispatch) => {
     dispatch(populateReviews(restructuredReviews));
 }
 
-export const deleteReview = (reviewId) => async (dispatch) => {
+export const deleteReview = (reviewId, spotId) => async (dispatch) => {
     csrfFetch(`/api/reviews/${reviewId}`, {
         method: "DELETE"
     });
 
     dispatch(removeReview(reviewId));
+    dispatch(getSingleSpot(spotId));
 }
 
 export const createReview = (spotId, review, user, reviewImages=[]) => async (dispatch) => {
@@ -54,6 +56,7 @@ export const createReview = (spotId, review, user, reviewImages=[]) => async (di
     createdReview.ReviewImages = reviewImages;
 
     dispatch(addReview(createdReview));
+    dispatch(getSingleSpot(spotId));
 }
 
 
