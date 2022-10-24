@@ -1,5 +1,7 @@
 const Spot = ({spot}) => {
     console.log("AVG RATING", spot.avgRating);
+    console.log("AVG RATING TYPE", typeof spot.avgRating)
+    
     const avgRating = spot.avgRating ? spot.avgRating.toFixed(2) : "No ratings yet"
 
     return (
