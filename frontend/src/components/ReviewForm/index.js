@@ -65,27 +65,31 @@ const ReviewForm = ({spotId}) => {
 
     return (
     <form id="review-form" onSubmit={onFormSubmit}>
+        <h2 id="review-form-header">Your Review</h2>
+
+        <h2 id="rating-header">star rating: </h2>
+        <div id="review-radio">
+            <label className="rating-label" htmlFor="rating">1</label>
+            <input name="rating" type="radio" id="rating-1" value={1} onChange={onChangeRating}></input>
+            
+            <label className="rating-label" htmlFor="rating">2</label>
+            <input name="rating" type="radio" id="rating-2" value={2} onChange={onChangeRating}></input>
+            
+            <label className="rating-label" htmlFor="rating">3</label>
+            <input name="rating" type="radio" id="rating-3" value={3} onChange={onChangeRating}></input>
+            
+            <label className="rating-label" htmlFor="rating">4</label>
+            <input name="rating" type="radio" id="rating-4" value={4} onChange={onChangeRating}></input>
+            
+            <label className="rating-label" htmlFor="rating">5</label>
+            <input name="rating" type="radio" id="rating-5" value={5} onChange={onChangeRating}></input>
+            {submitted && errors[1] && <div className="validationError">{errors[1]}</div>}
+        </div>
+
         <label htmlFor="review-text"></label>
         <textarea  placeholder="Review" id="review-text" value={review} onChange={e=>setReview(e.target.value)}></textarea>
         {submitted && errors[0] && <div className="validationError">{errors[0]}</div>}
-
-        <label htmlFor="rating">1</label>
-        <input name="rating" type="radio" id="rating-1" value={1} onChange={onChangeRating}></input>
-        
-        <label htmlFor="rating">2</label>
-        <input name="rating" type="radio" id="rating-2" value={2} onChange={onChangeRating}></input>
-        
-        <label htmlFor="rating">3</label>
-        <input name="rating" type="radio" id="rating-3" value={3} onChange={onChangeRating}></input>
-        
-        <label htmlFor="rating">4</label>
-        <input name="rating" type="radio" id="rating-4" value={4} onChange={onChangeRating}></input>
-        
-        <label htmlFor="rating">5</label>
-        <input name="rating" type="radio" id="rating-5" value={5} onChange={onChangeRating}></input>
-        {submitted && errors[1] && <div className="validationError">{errors[1]}</div>}
-
-        <button>Submit Review</button>
+        <button id="submit-review">Submit Review</button>
      </form>
     )
 }
