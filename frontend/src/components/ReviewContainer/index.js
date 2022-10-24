@@ -56,9 +56,9 @@ const ReviewContainer = ({spotId}) => {
                               </Route> */}
                             </>}
             </div>
-             {reviews && Object.values(reviews).map(({review, stars, userId, id, spotId}) => {
+             {reviews && Object.values(reviews).map(({review, stars, userId, id, spotId, User}) => {
                 const isOwn = currentUserId === userId
-                return <Review  spotId={spotId} reviewId={id} review={review} stars={stars} isOwn={isOwn}/>
+                return <Review  spotId={spotId} reviewId={id} review={review} stars={stars} isOwn={isOwn} username={User.firstName}/>
              })}
         </div>
     )

@@ -60,7 +60,7 @@ const SingleSpot = () => {
                 )}
             </div>
             <div id="single-spot-subheading">
-              <div><i class="fa-solid fa-star"></i>  {spot.avgStarRating.toFixed(2)}</div>
+              <div><i class="fa-solid fa-star"></i>  {spot.avgSpotRating ? spot.avgSpotRating.toFixed(2) : "No ratings yet"}</div>
               <div>{spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}</div>
               <div>{spot.city}, {spot.state}, {spot.country}</div>
             </div>

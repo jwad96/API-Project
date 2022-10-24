@@ -1,19 +1,33 @@
-.individual-review {
-  display: flex;
-  margin-bottom: 20px;
-}
+
 
 #rating-container {
   display: flex;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgb(223, 238, 243);
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  font-size: 13px;
+  height: 1.2rem;
+  width: fit-content;
+}
+
+.reviewer-profile-icon {
+  font-size: 1.2rem;
+  margin-left: 10px;
 }
 
 span {
   margin-left: 5px;
 }
 
-p#review-text {
+#review-text-display {
   margin-left: 10px;
   width: fit-content;
+  max-width: 500px;
+  margin-bottom: 50px;
 }
 
 #delete-review {
@@ -31,3 +45,8 @@ p#review-text {
 #delete-review:hover {color: white;
 background-color: rgb(252, 105, 105);
 cursor: pointer;}
+
+#review-author {
+  margin-bottom: 60px;
+  font-weight: bold;
+}
