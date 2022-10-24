@@ -58,11 +58,11 @@ const SpotForm = ({edit}) => {
             errs[3] = ("country must be present");
         }
 
-        if (lat === "" || isNaN(Number(lat))) {
+        if (lat === "" || isNaN(Number(lat)) || Number(lat) < -90 || Number(lat) > 90) {
             errs[4] = ("valid lat required")
         }
 
-        if (lng === "" || isNaN(Number(lng))) {
+        if (lng === "" || isNaN(Number(lng)) || Number(lat) < -180 || Number(lat) > 180) {
             errs[5] = ("valid lng required")
         }
 
