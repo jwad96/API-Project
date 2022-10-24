@@ -1,18 +1,20 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {Route, useHistory, useLocation} from "react-router";
 import {useSelector, useDispatch} from "react-redux"
 import {getReviews} from "../../store/review";
 import Review from "../Review";
 import ReviewForm from "../ReviewForm";
 
+import "./ReviewContainer.css";
+
+
+import {ModalContext, Modal} from "../../context/Modal";
+import ReviewFormModal from "../ReviewFormModal";
+
 const ReviewContainer = ({spotId}) => {
     const [notReviewed, setNotReviewed] = useState(false);
     
-    const urls = {
-        [`/spots/${spotId}/createReview`]: `/spots/${spotId}`,
-        [`/spots/${spotId}`]: `/spots/${spotId}/createReview`
-    }
-
+    const {setShowReviewModal} = useContext(ModalContext);
     const location = useLocation().pathname;
     const reviews = useSelector(state => state.reviews.spot)
     const user = useSelector(state => state.session.user);
@@ -22,7 +24,7 @@ const ReviewContainer = ({spotId}) => {
     const history = useHistory();
 
     const onDisplayReviewForm = (e) => {
-        history.push(urls[location]);
+        setShowReviewModal(true);
     }
     
     useEffect(() => {
@@ -37,18 +39,22 @@ const ReviewContainer = ({spotId}) => {
     }, [reviews])
 
     return (
-        <>
+        <div id="review-container">
+            <div id="review-header">
+                <h2>Reviews</h2>
             {currentUserId && notReviewed && <>
-                              <button onClick={onDisplayReviewForm}>Create Review</button>
-                              <Route path="/spots/:spotId/createReview">
+                              <button id="create-review" onClick={onDisplayReviewForm}>Create Review</button>
+                              <ReviewFormModal spotId={spotId}/>
+                              {/* <Route path="/spots/:spotId/createReview">
                                 <ReviewForm spotId={spotId} />
-                              </Route>
+                              </Route> */}
                             </>}
+            </div>
              {reviews && Object.values(reviews).map(({review, stars, userId, id, spotId}) => {
                 const isOwn = currentUserId === userId
                 return <Review  spotId={spotId} reviewId={id} review={review} stars={stars} isOwn={isOwn}/>
              })}
-        </>
+        </div>
     )
 }
 

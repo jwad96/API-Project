@@ -10,7 +10,7 @@ import "./SpotForm.css";
 
 const SpotForm = ({edit}) => {
     const {spotId} = useParams();
-    const {setShowSpotModal} = useContext(ModalContext);
+    const {setShowSpotModal, setShowSpotEditModal} = useContext(ModalContext);
     const currentSpot = useSelector(state => state.spots.allSpots[spotId]);
     const location = useLocation();
     // const isEdit = location.pathname.split("/").at(-1) === "edit";
@@ -95,11 +95,13 @@ const SpotForm = ({edit}) => {
         if (Object.keys(errors).length === 0) {
             const spot = {address, city, state, country, lat, lng, name, description, price, image: previewImage}
             if (isEdit) {
+                console.log("WE EDITING");
                 dispatch(editSpot(spotId, spot))
+                setShowSpotEditModal(false);
             } else {
                 dispatch(addSpot(spot));
+                setShowSpotModal(false);
             }
-            setShowSpotModal(false);
             history.push("/");
         }
     }

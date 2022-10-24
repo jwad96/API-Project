@@ -1,10 +1,13 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router";
 import {createReview} from "../../store/review";
 import "./ReviewForm.css";
 
+import {ModalContext} from "../../context/Modal";
+
 const ReviewForm = ({spotId}) => {
+    const {setShowReviewModal} = useContext(ModalContext);
     const {id, firstName, lastName} = useSelector(state => state.session.user);
 
     const [review, setReview] = useState("");
@@ -56,6 +59,7 @@ const ReviewForm = ({spotId}) => {
 
             dispatch(createReview(spotId, reviewBody, user))
             history.push(`/spots/${spotId}`)
+            setShowReviewModal(false);
         }
 
     }

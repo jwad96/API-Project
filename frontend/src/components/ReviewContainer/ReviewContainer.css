@@ -1,0 +1,30 @@
+#review-container {
+  margin-top: 100px;
+}
+
+#review-header {
+  display: flex;
+}
+
+#review-header {
+  border-bottom: 2px solid rgb(136, 190, 207);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+#create-review {
+  background-color: white;
+  border-radius: 8px;
+  border: 2px solid rgb(136, 190, 207);
+  color: rgb(87, 146, 163);
+  padding-left: 8px;
+  padding-right: 8px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+#create-review:hover {
+  color: white;
+  background-color: rgb(136, 190, 207);
+  cursor: pointer;
+}

@@ -1,0 +1,33 @@
+.individual-review {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#rating-container {
+  display: flex;
+}
+
+span {
+  margin-left: 5px;
+}
+
+p#review-text {
+  margin-left: 10px;
+  width: fit-content;
+}
+
+#delete-review {
+  margin-left: 10px;
+  height: 20px;
+  background-color: white;
+  border-radius: 8px;
+  border: 2px solid rgb(252, 105, 105);
+  color: rgb(252, 105, 105);
+  padding-left: 8px;
+  padding-right: 8px;
+  font-weight: bold;
+}
+
+#delete-review:hover {color: white;
+background-color: rgb(252, 105, 105);
+cursor: pointer;}

@@ -8,14 +8,15 @@ import ReviewContainer from "../ReviewContainer";
 
 import SpotFormModal from "../SpotFormModal";
 import {ModalContext} from "../../context/Modal"
+import "./SingleSpot.css";
 
 
 const SingleSpot = () => {
     const {spotId} = useParams();
-    const {setShowSpotEditModal,
-           showReviewModal, setShowReviewModal} = useContext(ModalContext);
+    const {setShowSpotEditModal} = useContext(ModalContext);
     const spot = useSelector(state => state.spots.singleSpot);
     const user = useSelector(state => state.session.user);
+    console.log("WE RENDERIN");
     const userId = user ? user.id : null;
 
     const [ownSpot, setOwnSpot] = useState(false);
@@ -45,18 +46,38 @@ const SingleSpot = () => {
 
     return spot && (
         <>
-          <div>{spotId}</div>
-          {ownSpot && (
-            <>
-              <button onClick={onDelete}>DELETE</button>
-              <button onClick={onEdit}>EDIT</button>
-              {/* <Route path={`/spots/:spotId/edit`}>
-                <SpotForm />
-              </Route> */}
-              <SpotFormModal edit={true}/>
-            </>
-          )}
-          <ReviewContainer spotId={spotId}/>
+          <div id="single-spot-container">
+            <div id="header">
+              <h1>{spot.name}</h1>
+                {ownSpot && (
+                <>
+                  <button id="delete" onClick={onDelete}>DELETE</button>
+                  <button id="edit" onClick={onEdit}>EDIT</button>
+                  {/* <Route path={`/spots/:spotId/edit`}>
+                    <SpotForm />
+                  </Route> */}
+                  <SpotFormModal edit={true}/>
+                </>
+                )}
+            </div>
+            <div id="single-spot-subheading">
+              <div><i class="fa-solid fa-star"></i>  {spot.avgStarRating}</div>
+              <div>{spot.numReviews} {spot.numReviews === 1 ? "review" : "reviews"}</div>
+              <div>{spot.city}, {spot.state}, {spot.country}</div>
+            </div>
+            {/* <img id="single-spot-img" src={spot.SpotImages.at(-1).url} /> */}
+            <div id="single-spot-img">
+              <img id="img-1" src={spot.SpotImages.at(-1).url} />
+              <img id="img-2" src={spot.SpotImages.at(-1).url} />
+              <img id="img-3" src={spot.SpotImages.at(-1).url} />
+              <img id="img-4" src={spot.SpotImages.at(-1).url} />
+              <img id="img-5" src={spot.SpotImages.at(-1).url} />
+            </div>
+            <h2>{spot.description}</h2>
+            
+            <ReviewContainer spotId={spotId}/>
+          </div>
+
         </>
     )
 
