@@ -21,6 +21,23 @@
 
 .title {
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.spot-rating {
+  font-size: 1.2rem;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.spot-star {
+  font-size: 1rem;
+  margin-right: 4px;
+  padding-bottom: 3px;
 }
 
 .title + div {

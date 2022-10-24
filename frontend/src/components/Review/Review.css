@@ -12,6 +12,7 @@
   font-size: 13px;
   height: 1.2rem;
   width: fit-content;
+  margin-left: 8px;
 }
 
 .reviewer-profile-icon {
@@ -28,6 +29,7 @@ span {
   width: fit-content;
   max-width: 500px;
   margin-bottom: 50px;
+  margin-top: 8px;
 }
 
 #delete-review {
