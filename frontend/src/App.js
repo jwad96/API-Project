@@ -39,6 +39,9 @@ function App() {
           <Route path="/spots/:spotId">
             <SingleSpot />
           </Route>
+          <Route>
+            <h1>RESOURCE NOT FOUND</h1>
+          </Route>
         </Switch>
       )}
     </>

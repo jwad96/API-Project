@@ -19,12 +19,13 @@ const SingleSpot = () => {
     const userId = user ? user.id : null;
 
     const [ownSpot, setOwnSpot] = useState(false);
+    const [found, setFound] = useState(false);
 
     const dispatch = useDispatch();
     const history = useHistory();
 
     useEffect(() => {
-        dispatch(getSingleSpot(spotId));
+        dispatch(getSingleSpot(spotId)).then(res => {if (res.status !== 404) setFound(true)});
     }, [dispatch, spotId])
 
 
@@ -43,8 +44,9 @@ const SingleSpot = () => {
         setShowSpotEditModal(true);
     }
 
-    return spot && (
+    return !found && <h1>SPOT NOT FOUND</h1> || spot && (
         <>
+          
           <div id="single-spot-container">
             <div id="header">
               <h1>{spot.name}</h1>

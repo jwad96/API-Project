@@ -37,8 +37,15 @@ const addImage = (id, url) => {
 }
 
 export const getSingleSpot = (id) => async (dispatch) => {
-    const spot = await csrfFetch(`/api/spots/${id}`).then(res => res.json());
-    dispatch(singleSpot(spot));
+    // const spot = await csrfFetch(`/api/spots/${id}`).then(res => res.json());
+    const spot = await csrfFetch(`/api/spots/${id}`).then(res => res.json()).catch(err => err);
+    
+    if (spot.status !== 404) {
+        dispatch(singleSpot(spot));
+    }
+
+    return spot
+
 }
 
 export const populateSpots = () => async (dispatch) => {
