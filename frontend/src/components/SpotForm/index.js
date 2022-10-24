@@ -78,7 +78,8 @@ const SpotForm = ({edit}) => {
             errs[8] = ("valid price required");
         }
 
-        if (previewImage.length < 1) {
+
+        if (previewImage.length < 1 || !previewImage.includes(".com")) {
             errs[9] = ("preview image URL required");
         }
 
@@ -108,10 +109,11 @@ const SpotForm = ({edit}) => {
 
 return (
     <>
-    <form className="spot-form">
+    <form id="spot-form">
+        <h2 id="spot-header">Create your spot!</h2>
         <div className="input-wrapper">
             <label htmlFor="address"></label>
-            <input id="address" placeholder="Address" value={address} onChange={e=>setAddress(e.target.value)}></input>
+            <input className="spot-form-input" id="address" placeholder="Address" value={address} onChange={e=>setAddress(e.target.value)}></input>
             {submittedOnce && <span className="validationError">{errors[0]}</span>}
         </div>
         
