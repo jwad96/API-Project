@@ -34,9 +34,15 @@ const ReviewContainer = ({spotId}) => {
     useEffect(() => {
         if (reviews) {
             setNotReviewed(!Object.values(reviews).some(review => review.User.id === currentUserId))
+            console.log("WHY WOULD I RECALCULATE?")
         }
         
-    }, [reviews])
+    }, [reviews, user])
+
+    console.log("REVIEW CONTAINER RENDERIN");
+    console.log("CURRENT USER ID", currentUserId);
+    console.log("NOT REVIEWED", notReviewed);
+    console.log("REVIEWS", reviews);
 
     return (
         <div id="review-container">

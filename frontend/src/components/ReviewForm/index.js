@@ -57,8 +57,7 @@ const ReviewForm = ({spotId}) => {
 
             console.log("REVIEW BODY", reviewBody);
 
-            dispatch(createReview(spotId, reviewBody, user))
-            history.push(`/spots/${spotId}`)
+            dispatch(createReview(spotId, reviewBody, user)).then(history.push(`/spots/${spotId}`));
             setShowReviewModal(false);
         }
 
