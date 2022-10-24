@@ -12,9 +12,11 @@ const Review = ({review, stars, isOwn, reviewId, spotId, username}) => {
 
     return (<>
     <div className="individual-review">
-        <div id="rating-container"><i class="fa-solid fa-star"></i><span>{`${stars}`}</span><i className="fas fa-user-circle reviewer-profile-icon" /><span className="username">{username}</span></div>
+        <div class="review-header">
+            <div id="rating-container"><i class="fa-solid fa-star"></i><span>{`${stars}`}</span><i className="fas fa-user-circle reviewer-profile-icon" /><span className="username">{username}</span></div>
+            {isOwn && <button id="delete-review" onClick={onDelete}>DELETE</button>}
+        </div>
         <p id="review-text-display">{`${review}`}</p>
-        {isOwn && <button id="delete-review" onClick={onDelete}>DELETE</button>}
     </div>
         </>
     )

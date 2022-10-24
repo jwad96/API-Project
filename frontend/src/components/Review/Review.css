@@ -1,4 +1,6 @@
-
+.review-header {
+  display: flex;
+}
 
 #rating-container {
   display: flex;
@@ -33,7 +35,7 @@ span {
 }
 
 #delete-review {
-  margin-left: 10px;
+  margin-left: 20px;
   height: 20px;
   background-color: white;
   border-radius: 8px;
